@@ -17,6 +17,7 @@ import { JsonFileLoader } from '@graphql-toolkit/json-file-loader'
 import { GraphQLFileLoader } from '@graphql-toolkit/graphql-file-loader'
 import { CodeFileLoader } from '@graphql-toolkit/code-file-loader'
 import { PrismaLoader } from '@graphql-toolkit/prisma-loader'
+import findUp from 'find-up'
 
 import serialize from './serialize'
 
@@ -76,6 +77,12 @@ const getLocation = (document: DocumentNode) => {
   return new Location(startToken, endToken, source)
 }
 
+const getClassDefs = async () => {
+  const packagePath = await findUp('package.json', { cwd: __dirname })
+  const rootDir = pathDirname(packagePath ?? '')
+  return fs.promises.readFile(pathJoin(rootDir, 'templates/classDefinitions.js'))
+}
+
 const getGraphqlSdl = async (
   ctx: RollupPluginContext,
   filePath: string,
@@ -88,7 +95,7 @@ const getGraphqlSdl = async (
   )
   const definitionFilter = (def: DefinitionNode): def is ExportedDefinitionNode => 'name' in def
 
-  const classDefs = await fs.promises.readFile(pathJoin(__dirname, './classDefinitions.js'))
+  const classDefs = await getClassDefs()
 
   const namedExports = filtered
     .map(({ document: { definitions } }) => definitions)

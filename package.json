@@ -11,6 +11,7 @@
     "@graphql-toolkit/json-file-loader": "^0.10.2",
     "@graphql-toolkit/prisma-loader": "^0.10.2",
     "@graphql-toolkit/url-loader": "^0.10.2",
+    "find-up": "^4.1.0",
     "graphql": "^15.0.0",
     "magic-string": "^0.25.7",
     "rollup-pluginutils": "^2.8.2"
