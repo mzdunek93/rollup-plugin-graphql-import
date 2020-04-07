@@ -1,8 +1,34 @@
 {
-  "extends": "@psirenny/eslint-config",
+  "plugins": ["@typescript-eslint", "prettier", "ava", "markdown"],
+  "extends": [
+    "plugin:ava/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
   "rules": {
-    "import/no-unresolved": [2, {
-      ignore: ['rollup-plugin-graphql-import']
-    }]
+    "arrow-body-style": ["error", "as-needed"],
+    "comma-dangle": ["error", "never"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "no-fallthrough": ["error", { "commentPattern": "break[\\s\\w]*omitted" }],
+    "no-multi-spaces": ["error", { "ignoreEOLComments": false }],
+    "no-console": ["warn", { "allow": ["error"] }],
+    "semi": ["error", "never"],
+    "prettier/prettier": ["error"],
+    "object-shorthand": ["error", "always"],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "eol-last": ["error", "always"],
+    "no-multiple-empty-lines": [
+      "error",
+      { "max": 2, "maxBOF": 0, "maxEOF": 1 }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off"
   }
 }

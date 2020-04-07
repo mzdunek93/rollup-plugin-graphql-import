@@ -1,24 +1,11 @@
-// @flow strict
-
-import rollupPluginBabel from 'rollup-plugin-babel';
-import rollupPluginFlowEntry from 'rollup-plugin-flow-entry';
+import typescript from 'rollup-plugin-typescript'
 
 export default {
-  external: [
-    'fs',
-    'graphql',
-    'graphql-import',
-    'path',
-    'rollup-pluginutils',
-    'tiny-invariant',
-  ],
-  input: 'src/index.js',
+  external: ['fs', 'graphql', 'path'],
+  input: 'src/index.ts',
   output: [
     { file: 'dist/cjs/index.js', format: 'cjs' },
-    { file: 'dist/esm/index.js', format: 'esm' },
+    { file: 'dist/esm/index.js', format: 'esm' }
   ],
-  plugins: [
-    rollupPluginFlowEntry({ mode: 'strict-local' }),
-    rollupPluginBabel({ babelHelpers: 'inline' }),
-  ],
-};
+  plugins: [typescript()]
+}

@@ -17,13 +17,13 @@ See: [`graphql-import`](https://github.com/prisma/graphql-import).
 ```js
 // @flow
 
-import graphqlImport from 'rollup-plugin-graphql-import';
+import graphqlImport from 'rollup-plugin-graphql-import'
 
 export default {
   input: 'src/Schema.graphql',
   output: [{ file: 'dist/index.js', format: 'esm' }],
-  plugins: [graphqlImport()],
-};
+  plugins: [graphqlImport()]
+}
 ```
 
 ## Options
