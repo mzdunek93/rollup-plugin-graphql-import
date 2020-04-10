@@ -1,6 +1,13 @@
-export default `schema {
-  mutation: Mutation
-  query: Query
+export default `type Baz {
+  id: ID!
+}
+
+type Bar {
+  baz: Baz!
+}
+
+type Foo {
+  baz: Baz!
 }
 
 type Mutation {
@@ -13,15 +20,8 @@ type Query {
   getFoo(id: ID!): Foo
 }
 
-type Bar {
-  baz: Baz!
-}
-
-type Foo {
-  baz: Baz!
-}
-
-type Baz {
-  id: ID!
+schema {
+  mutation: Mutation
+  query: Query
 }
 `

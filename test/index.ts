@@ -3,6 +3,8 @@ import test from 'ava'
 import { basename as pathBasename } from 'path'
 import { print } from 'graphql'
 import { rollup } from 'rollup'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import expectedSchema from './fixtures/output/schema'
 import expectedWatchFileNames from './fixtures/output/watch-file-names'
 import plugin from '../'
@@ -21,10 +23,13 @@ function requireFromString(src: string) {
 test('default options', async (t) => {
   const { generate, watchFiles } = await rollup({
     input: graphqlFilePath,
-    plugins: [plugin()]
+    plugins: [plugin(), resolve(), commonjs()]
   })
 
-  const watchFileNames = watchFiles.sort().map((path) => pathBasename(path))
+  const watchFileNames = watchFiles
+    .sort()
+    .map((path) => pathBasename(path))
+    .filter((filename) => /\.graphql$/.test(filename))
 
   const { output } = await generate({
     format: 'cjs',
@@ -42,7 +47,7 @@ test('default options', async (t) => {
 test('with includes option', async (t) => {
   const { generate } = await rollup({
     input: graphqlFilePath,
-    plugins: [plugin({ include: '**/*.graphql' })]
+    plugins: [plugin({ include: '**/*.graphql' }), resolve(), commonjs()]
   })
 
   const { output } = await generate({

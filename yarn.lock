@@ -4451,7 +4451,7 @@ rimraf@^3.0.0:
 
 rollup-plugin-graphql-import@mzdunek93/rollup-plugin-graphql-import#rollup-plugin-graphql-import-v1.1.0-gitpkg:
   version "1.1.0"
-  resolved "https://codeload.github.com/mzdunek93/rollup-plugin-graphql-import/tar.gz/fe06e0fb57fbc4fced99b9fd07d0b412bbc515fe"
+  resolved "https://codeload.github.com/mzdunek93/rollup-plugin-graphql-import/tar.gz/d4a506c0c9e7a708feb6bc460915157ee9ca2397"
   dependencies:
     "@rollup/pluginutils" "^3.0.8"
     graphql "^15.0.0"
