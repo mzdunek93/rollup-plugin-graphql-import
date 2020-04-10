@@ -1,0 +1,96 @@
+{
+  "name": "rollup-plugin-graphql-import",
+  "version": "1.1.0",
+  "description": "Rollup plugin to import graphql schema definitions",
+  "author": "Dennis Torres <djtorres0@gmail.com>",
+  "bugs": "https://github.com/mzdunek93/rollup-plugin-graphql-import/issues",
+  "dependencies": {
+    "@rollup/pluginutils": "^3.0.8",
+    "graphql": "^15.0.0",
+    "graphql-tag": "^2.10.3"
+  },
+  "devDependencies": {
+    "@ava/typescript": "^1.1.1",
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-typescript": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "ava": "3.6.0",
+    "dictionary-en": "3.0.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-ava": "10.2.0",
+    "eslint-plugin-markdown": "1.0.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "graphql-schema-linter": "0.2.5",
+    "husky": "4.2.4",
+    "lint-staged": ">=10",
+    "npm-run-all": "4.1.5",
+    "nyc": "15.0.1",
+    "prettier": "^2.0.4",
+    "rollup": "2.3.4",
+    "rollup-plugin-graphql-import": "mzdunek93/rollup-plugin-graphql-import#rollup-plugin-graphql-import-v1.1.0-gitpkg",
+    "rollup-plugin-handlebars-plus": "^0.2.5",
+    "standard-version": "7.1.0",
+    "trash-cli": "3.0.0",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3",
+    "unified": "9.0.0"
+  },
+  "homepage": "https://github.com/mzdunek93/rollup-plugin-graphql-import",
+  "keywords": [
+    "graphql",
+    "import",
+    "rollup-plugin",
+    "schema"
+  ],
+  "license": "Unlicense",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "repository": "github:mzdunek93/rollup-plugin-graphql-import",
+  "scripts": {
+    "audit": "yarn audit",
+    "build": "rollup -c",
+    "check": "run-s audit deps:check lint test test:cov typecheck",
+    "ci:check": "circleci local execute --job check",
+    "clean": "trash **.DS_Store *.log .bin .nyc_* dist node_modules",
+    "deps:check": "run-s deps:check:verify deps:check:integrity",
+    "deps:check:integrity": "yarn check --integrity",
+    "deps:check:verify": "yarn check --verify-tree",
+    "lint": "run-s lint:graphql lint:md lint:ts",
+    "lint:graphql": "graphql-schema-linter test/**/*.graphql",
+    "lint:ts": "eslint . --ext .ts,.md",
+    "outdated": "yarn outdated",
+    "prerelease": "run-s build",
+    "release": "standard-version",
+    "test": "nyc ava --verbose",
+    "test:cov": "nyc check-coverage",
+    "test:cov:report": "nyc report --reporter=html",
+    "update": "run-s update:js update:yarn",
+    "update:js": "yarn upgrade-interactive --latest",
+    "update:yarn": "yarn policies set-version"
+  },
+  "sideEffects": false,
+  "types": "./index.d.ts",
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.graphql": "graphql-schema-linter",
+    "*.{ts,md}": "eslint --cache --fix"
+  }
+}

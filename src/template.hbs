@@ -1,0 +1,18 @@
+import { Source } from 'graphql'
+import { Location, Token } from 'graphql/language/ast'
+import { mergeImportDefs } from 'rollup-plugin-graphql-import/dist/helpers'
+
+const imports = {}
+{{#each imports}}
+import {{{varExp}}} from {{{filename}}}
+{{#each varNames}}
+export { {{{this}}} }
+imports['{{{this}}}'] = {{{this}}}
+{{/each}}
+{{/each}}
+
+{{#each namedExports}}
+export const {{{name}}} = {{{doc}}}
+{{/each}}
+
+export default mergeImportDefs({{{document}}}, imports)
