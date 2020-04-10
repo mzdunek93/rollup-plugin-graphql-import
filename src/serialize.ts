@@ -1,6 +1,13 @@
 import { Source } from 'graphql'
 import { Location, Token } from 'graphql/language/ast'
 
+const addIndent = (arr: string[]) => arr.map((el) => el.replace(/\n/g, '\n  '))
+
+const chooseTemplate = (arr: string[], o: string, c: string) =>
+  arr.reduce((acc, el) => acc + el.length, 0) > 50
+    ? `${o}\n  ${addIndent(arr).join(',\n  ')}\n${c}`
+    : `${o}${addIndent(arr).join(',')}${c}`
+
 const s = (literals: TemplateStringsArray, ...args: unknown[]) =>
   literals
     .slice(0, -1)
@@ -14,15 +21,16 @@ const serializeSource = ({ body, name, locationOffset }: Source) =>
 const serializeToken = ({ kind, start, end, line, column, value }: Token) =>
   s`new Token(${kind},${start},${end},${line},${column},null,${value})`
 
-const serializeLocation = ({ startToken, endToken, source }: Location) =>
-  s`new Location(${startToken},${endToken},${source})`
+const serializeLocation = ({ startToken, endToken, start, end, source }: Location) =>
+  s`new Location(${startToken || { start }},${endToken || { end }},${source})`
 
-const serializeArray = (arr: unknown[]) => `[${arr.map((val) => s`${val}`).join(',')}]`
+const serializeArray = (arr: unknown[]) =>
+  // eslint-disable-next-line prettier/prettier
+  chooseTemplate(arr.map((val) => s`${val}`), '[', ']')
 
 const serializeObject = (obj: object) =>
-  `{${Object.entries(obj)
-    .map(([key, value]) => s`${key}:${value}`)
-    .join(',')}}`
+  // eslint-disable-next-line prettier/prettier
+  chooseTemplate(Object.entries(obj).map(([key, value]) => s`${key}: ${value}`), '{', '}')
 
 const serialize = (val: unknown): string =>
   val instanceof Location

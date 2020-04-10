@@ -5,7 +5,7 @@ import { print } from 'graphql'
 import { rollup } from 'rollup'
 import expectedSchema from './fixtures/output/schema'
 import expectedWatchFileNames from './fixtures/output/watch-file-names'
-import plugin from '../src'
+import plugin from '../'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Module = require('module')
